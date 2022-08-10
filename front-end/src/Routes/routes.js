@@ -7,13 +7,15 @@ import { Sistema } from '../Pages/Sistema'
 
 const logado = localStorage.getItem('@user')
 
-const Rotas = () => {
+export function Rotas(props) {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
           {!logado && <Route path="/" element={<Login logado={logado} />} />}
-          {logado && <Route path="/" exact element={<Sistema />} />}
+          {logado && (
+            <Route path="/" exact element={<Sistema nome={props.nome} />} />
+          )}
           {!logado && (
             <Route path="/cadastro" element={<Cadastro logado={logado} />} />
           )}
@@ -22,5 +24,3 @@ const Rotas = () => {
     </div>
   )
 }
-
-export default Rotas

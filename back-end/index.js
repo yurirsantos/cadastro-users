@@ -2,14 +2,17 @@ const express = require('express')
 const app = express()
 const mysql = require('mysql')
 const cors = require('cors')
-const res = require('express/lib/response')
 const saltRounds = 10
 const bcrypt = require('bcrypt')
 
+let getEmail = ''
+let getCpf = ''
+let getPis = ''
+
 const db = mysql.createPool({
   host: 'localhost',
-  user: 'root',
-  password: '',
+  user: 'admin',
+  password: 'admin',
   database: 'banco'
 })
 
@@ -61,7 +64,11 @@ app.post('/loginEmail', (req, res) => {
   const email = req.body.email
   const password = req.body.password
 
-  db.query('SELECT * FROM usuarios WHERE email = ?', [email], (err, result) => {
+  getEmail = email
+
+  let sql = 'SELECT * FROM usuarios WHERE email = ?'
+
+  db.query(sql, [email], (err, result) => {
     if (err) {
       res.send(err)
     }
@@ -86,7 +93,11 @@ app.post('/loginCpf', (req, res) => {
   const cpf = req.body.cpf
   const password = req.body.password
 
-  db.query('SELECT * FROM usuarios WHERE cpf = ?', [cpf], (err, result) => {
+  getCpf = cpf
+
+  let sql = 'SELECT * FROM usuarios WHERE cpf = ?'
+
+  db.query(sql, [cpf], (err, result) => {
     if (err) {
       res.send(err)
     }
@@ -111,7 +122,11 @@ app.post('/loginPis', (req, res) => {
   const pis = req.body.pis
   const password = req.body.password
 
-  db.query('SELECT * FROM usuarios WHERE pis = ?', [pis], (err, result) => {
+  getPis = pis
+
+  let sql = 'SELECT * FROM usuarios WHERE pis = ?'
+
+  db.query(sql, [pis], (err, result) => {
     if (err) {
       res.send(err)
     }
@@ -132,17 +147,38 @@ app.post('/loginPis', (req, res) => {
   })
 })
 
-app.put('/edit', (req, res) => {
-  const { id } = req.body
-  const { name } = req.body
-  const { cost } = req.body
+app.get('/getNome', (req, res) => {
+  if (getEmail.length > 0) {
+    let sql = 'SELECT nome FROM usuarios WHERE email = ?'
 
-  let SQL = 'UPDATE items SET name= ?, cost= ? WHERE iditems = ?'
+    db.query(sql, [getEmail], (err, result) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.send(result)
+      }
+    })
+  } else if (getCpf > 0) {
+    let sql = 'SELECT nome FROM usuarios WHERE cpf = ?'
 
-  db.query(SQL, [name, cost, id], (err, result) => {
-    if (err) console.log(err)
-    else res.send(result)
-  })
+    db.query(sql, [getCpf], (err, result) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.send(result)
+      }
+    })
+  } else if (getPis > 0) {
+    let sql = 'SELECT nome FROM usuarios WHERE pis = ?'
+
+    db.query(sql, [getPis], (err, result) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.send(result)
+      }
+    })
+  }
 })
 
 app.listen(3001, () => {

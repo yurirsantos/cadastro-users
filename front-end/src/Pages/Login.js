@@ -1,13 +1,12 @@
-import * as yup from 'yup'
 import { ErrorMessage, Formik, Form, Field } from 'formik'
 import Axios from 'axios'
-import { Link } from 'react-router-dom'
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { useState } from 'react'
-const Swal = require('sweetalert2')
+import { Link } from 'react-router-dom'
 
 export function Login({ logado = false }) {
   const [formaLogin, setFormaLogin] = useState('')
+  const [getNome, setNome] = useState('')
 
   function setEmail() {
     setFormaLogin('email')
