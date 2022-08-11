@@ -3,10 +3,10 @@ import Axios from 'axios'
 import { LockClosedIcon } from '@heroicons/react/solid'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Title } from '../Components/Texts/Texts'
 
 export function Login({ logado = false }) {
   const [formaLogin, setFormaLogin] = useState('')
-  const [getNome, setNome] = useState('')
 
   function setEmail() {
     setFormaLogin('email')
@@ -66,16 +66,9 @@ export function Login({ logado = false }) {
 
   return (
     <div className="body">
-      <div className="right-login">
-        <div className="card-login">
-          <div className="user-links">
-            <div className="user-link-home">
-              {!logado && <Link to="/">Home</Link>}
-            </div>
-          </div>
-        </div>
+      <div className="mt-5">
+        <Title title="Olá Visitante!" />
       </div>
-
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>

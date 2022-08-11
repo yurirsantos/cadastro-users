@@ -147,9 +147,9 @@ app.post('/loginPis', (req, res) => {
   })
 })
 
-app.get('/getNome', (req, res) => {
+app.get('/getInfoUser', (req, res) => {
   if (getEmail.length > 0) {
-    let sql = 'SELECT nome FROM usuarios WHERE email = ?'
+    let sql = 'SELECT * FROM usuarios WHERE email = ?'
 
     db.query(sql, [getEmail], (err, result) => {
       if (err) {
@@ -159,7 +159,7 @@ app.get('/getNome', (req, res) => {
       }
     })
   } else if (getCpf > 0) {
-    let sql = 'SELECT nome FROM usuarios WHERE cpf = ?'
+    let sql = 'SELECT * FROM usuarios WHERE cpf = ?'
 
     db.query(sql, [getCpf], (err, result) => {
       if (err) {
@@ -169,7 +169,7 @@ app.get('/getNome', (req, res) => {
       }
     })
   } else if (getPis > 0) {
-    let sql = 'SELECT nome FROM usuarios WHERE pis = ?'
+    let sql = 'SELECT * FROM usuarios WHERE pis = ?'
 
     db.query(sql, [getPis], (err, result) => {
       if (err) {
@@ -179,6 +179,62 @@ app.get('/getNome', (req, res) => {
       }
     })
   }
+})
+
+app.post('/editarNome', (req, res) => {
+  const nome = req.body.nome
+
+  let sql = `UPDATE usuarios SET nome="${nome}" WHERE cpf="${getCpf}";`
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(result)
+    }
+  })
+})
+
+app.post('/editarEmail', (req, res) => {
+  const email = req.body.email
+
+  let sql = `UPDATE usuarios SET email="${email}" WHERE cpf="${getCpf}";`
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(result)
+    }
+  })
+})
+
+app.post('/editarCep', (req, res) => {
+  const cep = req.body.cep
+
+  let sql = `UPDATE usuarios SET cep="${cep}" WHERE cpf="${getCpf}";`
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(result)
+    }
+  })
+})
+
+app.post('/editarComplemento', (req, res) => {
+  const complemento = req.body.complemento
+
+  let sql = `UPDATE usuarios SET complemento="${complemento}" WHERE cpf="${getCpf}";`
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(result)
+    }
+  })
 })
 
 app.listen(3001, () => {
