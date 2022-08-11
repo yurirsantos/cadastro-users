@@ -4,6 +4,7 @@ const mysql = require('mysql')
 const cors = require('cors')
 const saltRounds = 10
 const bcrypt = require('bcrypt')
+const { query } = require('express')
 
 let getEmail = ''
 let getCpf = ''
@@ -79,6 +80,17 @@ app.post('/loginEmail', (req, res) => {
         }
         if (response === true) {
           res.send(response)
+          db.query(
+            'SELECT cpf FROM usuarios WHERE email = ?',
+            [email],
+            (err, result) => {
+              if (err) {
+                console.log(err)
+              } else {
+                getCpf = result[0].cpf
+              }
+            }
+          )
         } else {
           res.send({ msg: 'email ou senha incorreta' })
         }
@@ -137,6 +149,17 @@ app.post('/loginPis', (req, res) => {
         }
         if (response === true) {
           res.send(response)
+          db.query(
+            'SELECT cpf FROM usuarios WHERE email = ?',
+            [email],
+            (err, result) => {
+              if (err) {
+                console.log(err)
+              } else {
+                getCpf = result[0].cpf
+              }
+            }
+          )
         } else {
           res.send({ msg: 'PIS ou senha incorreta' })
         }
@@ -184,7 +207,10 @@ app.get('/getInfoUser', (req, res) => {
 app.post('/editarNome', (req, res) => {
   const nome = req.body.nome
 
-  let sql = `UPDATE usuarios SET nome="${nome}" WHERE cpf="${getCpf}";`
+  let sql = `UPDATE banco.usuarios SET nome="${nome}" WHERE cpf="${getCpf}";`
+
+  console.log(nome)
+  console.log(getCpf)
 
   db.query(sql, (err, result) => {
     if (err) {
@@ -234,6 +260,93 @@ app.post('/editarComplemento', (req, res) => {
     } else {
       res.send(result)
     }
+  })
+})
+
+app.post('/editarPais', (req, res) => {
+  const pais = req.body.pais
+
+  let sql = `UPDATE usuarios SET pais="${pais}" WHERE cpf="${getCpf}";`
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(result)
+    }
+  })
+})
+
+app.post('/editarUf', (req, res) => {
+  const uf = req.body.uf
+
+  let sql = `UPDATE usuarios SET uf="${uf}" WHERE cpf="${getCpf}";`
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(result)
+    }
+  })
+})
+
+app.post('/editarMunicipio', (req, res) => {
+  const municipio = req.body.municipio
+
+  let sql = `UPDATE usuarios SET municipio="${municipio}" WHERE cpf="${getCpf}";`
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(result)
+    }
+  })
+})
+
+app.post('/editarRua', (req, res) => {
+  const rua = req.body.rua
+
+  let sql = `UPDATE usuarios SET rua="${rua}" WHERE cpf="${getCpf}";`
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(result)
+    }
+  })
+})
+
+app.post('/editarNumero', (req, res) => {
+  const numero = req.body.numero
+
+  let sql = `UPDATE usuarios SET numero="${numero}" WHERE cpf="${getCpf}";`
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(result)
+    }
+  })
+})
+
+app.post('/editarPassword', (req, res) => {
+  const password = req.body.password
+
+  bcrypt.hash(password, saltRounds, (err, hash) => {
+    db.query(
+      `UPDATE usuarios SET password="${hash}" WHERE cpf="${getCpf}";`,
+      (error, response) => {
+        if (err) {
+          res.send(err)
+        } else {
+          res.send(response)
+        }
+      }
+    )
   })
 })
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import Axios from 'axios'
 import { Title } from '../Components/Texts/Texts'
-import { Popover, Transition } from '@headlessui/react'
 import { Formik, Form, Field } from 'formik'
 import { PencilAltIcon } from '@heroicons/react/solid'
 
@@ -12,6 +11,12 @@ export function Sistema() {
   const [editEmail, setEditEmail] = useState(false)
   const [editCep, setEditCep] = useState(false)
   const [editComplemento, setEditComplemento] = useState(false)
+  const [editPais, setEditPais] = useState(false)
+  const [editUf, setEditUf] = useState(false)
+  const [editMunicipio, setEditMunicipio] = useState(false)
+  const [editRua, setEditRua] = useState(false)
+  const [editNumero, setEditNumero] = useState(false)
+  const [editPassword, setEditPassword] = useState(false)
 
   useEffect(() => {
     Axios.get('http://localhost:3001/getInfoUser').then(response => {
@@ -56,6 +61,60 @@ export function Sistema() {
       complemento: values.complemento
     }).then(response => {
       alert('Complemento atualizado com sucesso!')
+      window.location.reload()
+    })
+  }
+
+  const editarPais = values => {
+    Axios.post('http://localhost:3001/editarPais', {
+      pais: values.pais
+    }).then(response => {
+      alert('País atualizado com sucesso!')
+      window.location.reload()
+    })
+  }
+
+  const editarUf = values => {
+    Axios.post('http://localhost:3001/editarUf', {
+      uf: values.uf
+    }).then(response => {
+      alert('UF atualizado com sucesso!')
+      window.location.reload()
+    })
+  }
+
+  const editarMunicipio = values => {
+    Axios.post('http://localhost:3001/editarMunicipio', {
+      municipio: values.municipio
+    }).then(response => {
+      alert('Município atualizado com sucesso!')
+      window.location.reload()
+    })
+  }
+
+  const editarRua = values => {
+    Axios.post('http://localhost:3001/editarRua', {
+      rua: values.rua
+    }).then(response => {
+      alert('Rua atualizado com sucesso!')
+      window.location.reload()
+    })
+  }
+
+  const editarNumero = values => {
+    Axios.post('http://localhost:3001/editarNumero', {
+      numero: values.numero
+    }).then(response => {
+      alert('Número atualizado com sucesso!')
+      window.location.reload()
+    })
+  }
+
+  const editarPassword = values => {
+    Axios.post('http://localhost:3001/editarPassword', {
+      password: values.password
+    }).then(response => {
+      alert('Senha atualizado com sucesso!')
       window.location.reload()
     })
   }
@@ -352,7 +411,7 @@ export function Sistema() {
                           className="h-10 w-10 text-center text-indigo-300 hover:text-indigo-400 cursor-pointer"
                           aria-hidden="true"
                           onClick={() => {
-                            if (editCep == false) {
+                            if (editComplemento == false) {
                               setEditComplemento(true)
                             } else {
                               setEditComplemento(false)
@@ -378,6 +437,444 @@ export function Sistema() {
                             className="bg-red-500 hover:bg-red-800 p-5 w-full text-white rounded-md  duration-100 m-4"
                             onClick={() => {
                               setEditComplemento(false)
+                            }}
+                          >
+                            Cancelar
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </Form>
+              </Formik>
+
+              <Formik initialValues={{}} onSubmit={editarPais}>
+                <Form className="text-white">
+                  <div>
+                    <div className="flex justify-between">
+                      {editPais == true && (
+                        <div className="m-3 w-full">
+                          <label className="font-bold text-md" form="pais">
+                            País
+                          </label>
+
+                          <Field
+                            name="pais"
+                            type="text"
+                            required
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                          />
+                        </div>
+                      )}
+
+                      {editPais == false && (
+                        <div className="m-3 w-full">
+                          <label className="font-bold text-md">País</label>
+
+                          <input
+                            type="text"
+                            required
+                            value={user.pais}
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                          />
+                        </div>
+                      )}
+                      <div className="p-5 w-16">
+                        <PencilAltIcon
+                          className="h-10 w-10 text-center text-indigo-300 hover:text-indigo-400 cursor-pointer"
+                          aria-hidden="true"
+                          onClick={() => {
+                            if (editPais == false) {
+                              setEditPais(true)
+                            } else {
+                              setEditPais(false)
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="w-11/12 m-auto mt-5 mb-5">
+                      {editPais == false ? (
+                        ''
+                      ) : (
+                        <>
+                          <button
+                            className="bg-green-500 p-5 w-full hover:bg-green-800  text-white rounded-md duration-100 m-4"
+                            type="submit"
+                          >
+                            Salvar
+                          </button>
+
+                          <button
+                            className="bg-red-500 hover:bg-red-800 p-5 w-full text-white rounded-md  duration-100 m-4"
+                            onClick={() => {
+                              setEditPais(false)
+                            }}
+                          >
+                            Cancelar
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </Form>
+              </Formik>
+
+              <Formik initialValues={{}} onSubmit={editarUf}>
+                <Form className="text-white">
+                  <div>
+                    <div className="flex justify-between">
+                      {editUf == true && (
+                        <div className="m-3 w-full">
+                          <label className="font-bold text-md" form="uf">
+                            UF
+                          </label>
+
+                          <Field
+                            name="uf"
+                            type="text"
+                            required
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                          />
+                        </div>
+                      )}
+
+                      {editUf == false && (
+                        <div className="m-3 w-full">
+                          <label className="font-bold text-md">UF</label>
+
+                          <input
+                            type="text"
+                            required
+                            value={user.uf}
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                          />
+                        </div>
+                      )}
+                      <div className="p-5 w-16">
+                        <PencilAltIcon
+                          className="h-10 w-10 text-center text-indigo-300 hover:text-indigo-400 cursor-pointer"
+                          aria-hidden="true"
+                          onClick={() => {
+                            if (editUf == false) {
+                              setEditUf(true)
+                            } else {
+                              setEditUf(false)
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="w-11/12 m-auto mt-5 mb-5">
+                      {editUf == false ? (
+                        ''
+                      ) : (
+                        <>
+                          <button
+                            className="bg-green-500 p-5 w-full hover:bg-green-800  text-white rounded-md duration-100 m-4"
+                            type="submit"
+                          >
+                            Salvar
+                          </button>
+
+                          <button
+                            className="bg-red-500 hover:bg-red-800 p-5 w-full text-white rounded-md  duration-100 m-4"
+                            onClick={() => {
+                              setEditUf(false)
+                            }}
+                          >
+                            Cancelar
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </Form>
+              </Formik>
+
+              <Formik initialValues={{}} onSubmit={editarMunicipio}>
+                <Form className="text-white">
+                  <div>
+                    <div className="flex justify-between">
+                      {editMunicipio == true && (
+                        <div className="m-3 w-full">
+                          <label className="font-bold text-md" form="municipio">
+                            Município
+                          </label>
+
+                          <Field
+                            name="minicipio"
+                            type="text"
+                            required
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                          />
+                        </div>
+                      )}
+
+                      {editMunicipio == false && (
+                        <div className="m-3 w-full">
+                          <label className="font-bold text-md">Município</label>
+
+                          <input
+                            type="text"
+                            required
+                            value={user.municipio}
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                          />
+                        </div>
+                      )}
+                      <div className="p-5 w-16">
+                        <PencilAltIcon
+                          className="h-10 w-10 text-center text-indigo-300 hover:text-indigo-400 cursor-pointer"
+                          aria-hidden="true"
+                          onClick={() => {
+                            if (editMunicipio == false) {
+                              setEditMunicipio(true)
+                            } else {
+                              setEditMunicipio(false)
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="w-11/12 m-auto mt-5 mb-5">
+                      {editMunicipio == false ? (
+                        ''
+                      ) : (
+                        <>
+                          <button
+                            className="bg-green-500 p-5 w-full hover:bg-green-800  text-white rounded-md duration-100 m-4"
+                            type="submit"
+                          >
+                            Salvar
+                          </button>
+
+                          <button
+                            className="bg-red-500 hover:bg-red-800 p-5 w-full text-white rounded-md  duration-100 m-4"
+                            onClick={() => {
+                              setEditMunicipio(false)
+                            }}
+                          >
+                            Cancelar
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </Form>
+              </Formik>
+
+              <Formik initialValues={{}} onSubmit={editarRua}>
+                <Form className="text-white">
+                  <div>
+                    <div className="flex justify-between">
+                      {editRua == true && (
+                        <div className="m-3 w-full">
+                          <label className="font-bold text-md" form="rua">
+                            Rua
+                          </label>
+
+                          <Field
+                            name="rua"
+                            type="text"
+                            required
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                          />
+                        </div>
+                      )}
+
+                      {editRua == false && (
+                        <div className="m-3 w-full">
+                          <label className="font-bold text-md">Rua</label>
+
+                          <input
+                            type="text"
+                            required
+                            value={user.rua}
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                          />
+                        </div>
+                      )}
+                      <div className="p-5 w-16">
+                        <PencilAltIcon
+                          className="h-10 w-10 text-center text-indigo-300 hover:text-indigo-400 cursor-pointer"
+                          aria-hidden="true"
+                          onClick={() => {
+                            if (editRua == false) {
+                              setEditRua(true)
+                            } else {
+                              setEditRua(false)
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="w-11/12 m-auto mt-5 mb-5">
+                      {editRua == false ? (
+                        ''
+                      ) : (
+                        <>
+                          <button
+                            className="bg-green-500 p-5 w-full hover:bg-green-800  text-white rounded-md duration-100 m-4"
+                            type="submit"
+                          >
+                            Salvar
+                          </button>
+
+                          <button
+                            className="bg-red-500 hover:bg-red-800 p-5 w-full text-white rounded-md  duration-100 m-4"
+                            onClick={() => {
+                              setEditRua(false)
+                            }}
+                          >
+                            Cancelar
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </Form>
+              </Formik>
+
+              <Formik initialValues={{}} onSubmit={editarNumero}>
+                <Form className="text-white">
+                  <div>
+                    <div className="flex justify-between">
+                      {editNumero == true && (
+                        <div className="m-3 w-full">
+                          <label className="font-bold text-md" form="numero">
+                            Número
+                          </label>
+
+                          <Field
+                            name="numero"
+                            type="number"
+                            required
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                          />
+                        </div>
+                      )}
+
+                      {editNumero == false && (
+                        <div className="m-3 w-full">
+                          <label className="font-bold text-md">Número</label>
+
+                          <input
+                            type="number"
+                            required
+                            value={user.numero}
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                          />
+                        </div>
+                      )}
+                      <div className="p-5 w-16">
+                        <PencilAltIcon
+                          className="h-10 w-10 text-center text-indigo-300 hover:text-indigo-400 cursor-pointer"
+                          aria-hidden="true"
+                          onClick={() => {
+                            if (editNumero == false) {
+                              setEditNumero(true)
+                            } else {
+                              setEditNumero(false)
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="w-11/12 m-auto mt-5 mb-5">
+                      {editNumero == false ? (
+                        ''
+                      ) : (
+                        <>
+                          <button
+                            className="bg-green-500 p-5 w-full hover:bg-green-800  text-white rounded-md duration-100 m-4"
+                            type="submit"
+                          >
+                            Salvar
+                          </button>
+
+                          <button
+                            className="bg-red-500 hover:bg-red-800 p-5 w-full text-white rounded-md  duration-100 m-4"
+                            onClick={() => {
+                              setEditNumero(false)
+                            }}
+                          >
+                            Cancelar
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </Form>
+              </Formik>
+
+              <Formik initialValues={{}} onSubmit={editarPassword}>
+                <Form className="text-white">
+                  <div>
+                    <div className="flex justify-between">
+                      {editPassword == true && (
+                        <div className="m-3 w-full">
+                          <label className="font-bold text-md" form="password">
+                            Senha
+                          </label>
+
+                          <Field
+                            name="password"
+                            type="password"
+                            required
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                          />
+                        </div>
+                      )}
+
+                      {editPassword == false && (
+                        <div className="m-3 w-full">
+                          <label className="font-bold text-md">Senha</label>
+
+                          <input
+                            type="number"
+                            required
+                            value={user.password}
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                          />
+                        </div>
+                      )}
+                      <div className="p-5 w-16">
+                        <PencilAltIcon
+                          className="h-10 w-10 text-center text-indigo-300 hover:text-indigo-400 cursor-pointer"
+                          aria-hidden="true"
+                          onClick={() => {
+                            if (editPassword == false) {
+                              setEditPassword(true)
+                            } else {
+                              setEditPassword(false)
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="w-11/12 m-auto mt-5 mb-5">
+                      {editPassword == false ? (
+                        ''
+                      ) : (
+                        <>
+                          <button
+                            className="bg-green-500 p-5 w-full hover:bg-green-800  text-white rounded-md duration-100 m-4"
+                            type="submit"
+                          >
+                            Salvar
+                          </button>
+
+                          <button
+                            className="bg-red-500 hover:bg-red-800 p-5 w-full text-white rounded-md  duration-100 m-4"
+                            onClick={() => {
+                              setEditPassword(false)
                             }}
                           >
                             Cancelar
