@@ -1,8 +1,10 @@
 import { ErrorMessage, Formik, Form, Field } from 'formik'
 import Axios from 'axios'
 import { Title } from '../Components/Texts/Texts'
+import { useState } from 'react'
 
 export function Cadastro({ logado = false }) {
+  const Swal = require('sweetalert2')
   const handleRegister = values => {
     Axios.post('http://localhost:3001/register', {
       nome: values.nome,
@@ -18,7 +20,11 @@ export function Cadastro({ logado = false }) {
       email: values.email,
       password: values.password
     }).then(response => {
-      window.location.reload()
+      Swal.fire('Sucesso!!', 'Usuário cadastrado!!', 'success')
+
+      setTimeout(function () {
+        window.location.href = '/'
+      }, 2000)
     })
   }
 

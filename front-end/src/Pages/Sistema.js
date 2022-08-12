@@ -17,6 +17,7 @@ export function Sistema() {
   const [editRua, setEditRua] = useState(false)
   const [editNumero, setEditNumero] = useState(false)
   const [editPassword, setEditPassword] = useState(false)
+  const Swal = require('sweetalert2')
 
   useEffect(() => {
     Axios.get('http://localhost:3001/getInfoUser').then(response => {
@@ -116,6 +117,25 @@ export function Sistema() {
     }).then(response => {
       alert('Senha atualizado com sucesso!')
       window.location.reload()
+    })
+  }
+
+  const deleteUser = values => {
+    Swal.fire({
+      title: `Realmente deseja deletar o Usuário ${user.nome}!?`,
+      text: 'Escolha uma opção abaixo, lembrando que não terá mais volta depois de apagar!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: `Sim, deletar! ${user.nome}`
+    }).then(result => {
+      if (result.isConfirmed) {
+        Axios.get('http://localhost:3001/deleteUser')
+        sair()
+      } else {
+        Swal.fire('Operação cancelada!', '', 'success')
+      }
     })
   }
 
@@ -885,6 +905,15 @@ export function Sistema() {
                   </div>
                 </Form>
               </Formik>
+
+              <div
+                className="bg-red-500 hover:bg-red-800 p-5 rounded-md w-4/5 m-auto  cursor-pointer"
+                onClick={deleteUser}
+              >
+                <h1 className="text-center text-white font-bold text-xl">
+                  Deletar Usuário
+                </h1>
+              </div>
             </div>
           </div>
         </>

@@ -350,6 +350,14 @@ app.post('/editarPassword', (req, res) => {
   })
 })
 
+app.get('/deleteUser', (req, res) => {
+  db.query(`DELETE FROM usuarios WHERE cpf = ${getCpf};`, (err, response) => {
+    if (err) {
+      res.send(err)
+    }
+  })
+})
+
 app.listen(3001, () => {
   console.log('rodando na porta 3001')
 })
