@@ -209,9 +209,6 @@ app.post('/editarNome', (req, res) => {
 
   let sql = `UPDATE banco.usuarios SET nome="${nome}" WHERE cpf="${getCpf}";`
 
-  console.log(nome)
-  console.log(getCpf)
-
   db.query(sql, (err, result) => {
     if (err) {
       console.log(err)
@@ -351,10 +348,10 @@ app.post('/editarPassword', (req, res) => {
 })
 
 app.get('/deleteUser', (req, res) => {
-  db.query(`DELETE FROM usuarios WHERE cpf = ${getCpf};`, (err, response) => {
+  db.query(`DELETE FROM usuarios WHERE cpf = ${getCpf};`, (err, result) => {
     if (err) {
       res.send(err)
-    }
+    } else res.send(result)
   })
 })
 

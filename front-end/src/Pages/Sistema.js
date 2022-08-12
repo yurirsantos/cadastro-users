@@ -34,7 +34,7 @@ export function Sistema() {
     Axios.post('http://localhost:3001/editarNome', {
       nome: values.nome
     }).then(response => {
-      alert('Nome atualizado com sucesso!')
+      Swal.fire('Nome alterado com sucesso!', '', 'success')
       window.location.reload()
     })
   }
@@ -43,7 +43,7 @@ export function Sistema() {
     Axios.post('http://localhost:3001/editarEmail', {
       email: values.email
     }).then(response => {
-      alert('E-mail atualizado com sucesso!')
+      Swal.fire('E-mail alterado com sucesso!', '', 'success')
       window.location.reload()
     })
   }
@@ -52,7 +52,7 @@ export function Sistema() {
     Axios.post('http://localhost:3001/editarCep', {
       cep: values.cep
     }).then(response => {
-      alert('CEP atualizado com sucesso!')
+      Swal.fire('CEP alterado com sucesso!', '', 'success')
       window.location.reload()
     })
   }
@@ -61,7 +61,7 @@ export function Sistema() {
     Axios.post('http://localhost:3001/editarComplemento', {
       complemento: values.complemento
     }).then(response => {
-      alert('Complemento atualizado com sucesso!')
+      Swal.fire('Complemento alterado com sucesso!', '', 'success')
       window.location.reload()
     })
   }
@@ -70,7 +70,7 @@ export function Sistema() {
     Axios.post('http://localhost:3001/editarPais', {
       pais: values.pais
     }).then(response => {
-      alert('País atualizado com sucesso!')
+      Swal.fire('País alterado com sucesso!', '', 'success')
       window.location.reload()
     })
   }
@@ -79,7 +79,7 @@ export function Sistema() {
     Axios.post('http://localhost:3001/editarUf', {
       uf: values.uf
     }).then(response => {
-      alert('UF atualizado com sucesso!')
+      Swal.fire('UF alterado com sucesso!', '', 'success')
       window.location.reload()
     })
   }
@@ -88,7 +88,7 @@ export function Sistema() {
     Axios.post('http://localhost:3001/editarMunicipio', {
       municipio: values.municipio
     }).then(response => {
-      alert('Município atualizado com sucesso!')
+      Swal.fire('Município alterado com sucesso!', '', 'success')
       window.location.reload()
     })
   }
@@ -97,7 +97,7 @@ export function Sistema() {
     Axios.post('http://localhost:3001/editarRua', {
       rua: values.rua
     }).then(response => {
-      alert('Rua atualizado com sucesso!')
+      Swal.fire('Rua alterada com sucesso!', '', 'success')
       window.location.reload()
     })
   }
@@ -106,7 +106,7 @@ export function Sistema() {
     Axios.post('http://localhost:3001/editarNumero', {
       numero: values.numero
     }).then(response => {
-      alert('Número atualizado com sucesso!')
+      Swal.fire('Número alterado com sucesso!', '', 'success')
       window.location.reload()
     })
   }
@@ -115,7 +115,7 @@ export function Sistema() {
     Axios.post('http://localhost:3001/editarPassword', {
       password: values.password
     }).then(response => {
-      alert('Senha atualizado com sucesso!')
+      Swal.fire('Senha alterado com sucesso!', '', 'success')
       window.location.reload()
     })
   }
@@ -131,8 +131,13 @@ export function Sistema() {
       confirmButtonText: `Sim, deletar! ${user.nome}`
     }).then(result => {
       if (result.isConfirmed) {
-        Axios.get('http://localhost:3001/deleteUser')
-        sair()
+        Swal.fire('Usuário deletado!', '', 'success')
+
+        setTimeout(() => {
+          Axios.get('http://localhost:3001/deleteUser').then(() => {
+            sair()
+          })
+        }, 1500)
       } else {
         Swal.fire('Operação cancelada!', '', 'success')
       }
@@ -316,6 +321,30 @@ export function Sistema() {
                   </div>
                 </Form>
               </Formik>
+
+              <div className="m-3 w-full">
+                <label className="font-bold text-md text-white">CPF</label>
+
+                <input
+                  name="cpf"
+                  type="number"
+                  required
+                  value={user.cpf}
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                />
+              </div>
+
+              <div className="m-3 w-full">
+                <label className="font-bold text-md text-white">PIS</label>
+
+                <input
+                  name="pis"
+                  type="number"
+                  required
+                  value={user.pis}
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                />
+              </div>
 
               <Formik initialValues={{}} onSubmit={editarCep}>
                 <Form className="text-white">
